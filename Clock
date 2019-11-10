@@ -1,0 +1,91 @@
+#include <RTClib.h>
+
+#include <SevSeg.h>
+
+SevSeg sevseg; //Initiate a seven segment controller object
+
+RTC_DS1307 rtc;
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(A0, OUTPUT);
+  
+  initializeDisplay();
+  initializeClock();
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  
+  sevseg.setNumber(getTime(), 1);
+  if(getMinutes(getTime()) % 2 == 0) {
+     digitalWrite(A0, HIGH);
+  } else {
+     digitalWrite(A0, LOW);
+  }
+  sevseg.refreshDisplay();
+}
+
+
+int getTime() {
+   DateTime now = rtc.now();
+   int hourDigit1 = now.hour() / 10;
+   int hourDigit2 = now.hour() % 10;
+   int minDigit1 = now.minute() / 10;
+   int minDigit2 = now.minute() % 10;
+
+   int time = (hourDigit1 * 1000) + (minDigit1 * 100) + (hourDigit2 * 10) + minDigit2;
+   
+   return time;
+}
+
+int getMinutes(int time) {
+
+  // 1234
+  int hourDig1 = time / 1000;
+  time %= 1000;
+  int minDig1 = (time / 100);
+  time %= 100;
+  int hourDig2 = (time / 10);
+  time %= 10;
+  int minDig2 = time;
+
+  return minDig1 * 10 + minDig2;
+}
+
+void initializeDisplay() {
+
+  byte numDigits = 4;
+
+  byte digitPins[] = {2, 3, 4, 5};
+  
+  byte segmentPins[] = {6, 7, 8, 9, 10, 11, 12, 13};
+
+  sevseg.begin(COMMON_CATHODE, numDigits, digitPins, segmentPins);
+
+  sevseg.setBrightness(90);
+
+
+  
+
+}
+
+void initializeClock() {
+  Serial.begin(9600);
+  
+  if (!rtc.begin()) 
+  {
+    Serial.print("rtc  not connected");
+  }
+
+  if (!rtc.isrunning()) 
+  {
+    Serial.print("rtc  not running");
+    
+  }
+  
+   rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+
+}
+
+
