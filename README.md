@@ -13,7 +13,19 @@ Sends rf signal to and from the transcievers regarding that if their is or isn't
 
 ## Materials:
 
-(3) Arduino Unos (2) NRF24 Radio Transceivers (4) LEDs (3) Breadboards (1) DS1307 RTC real time clock (7) cardboard (2) sticks (1) roll of black tape (1) seven segment display (1) PIR sensor (2) servos (1) battery pack (#) Various Resistors
+* (3) Arduino Unos 
+* (2) NRF24 Radio Transceivers 
+* (4) LEDs 
+* (3) Breadboards 
+* (1) DS1307 RTC real time clock 
+* (7) cardboard 
+* (2) sticks 
+* (1) roll of black tape 
+* (1) seven segment display 
+* (1) PIR sensor 
+* (2) servos 
+* (1) battery pack 
+* (#) various Resistors
 
 ## Construction Challenges:
 
